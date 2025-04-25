@@ -78,20 +78,17 @@ class WeatherApp {
         if (!this.searchHistory.includes(city_lower)) {
             this.searchHistory.unshift(city_lower);
             this.updateHistoryList();
-            // BONUS Add to local storage
+            // BONUS: Add to local storage
             localStorage.setItem('searchHistory', JSON.stringify(this.searchHistory));
         }
     }
 
     updateHistoryList() {
         // TODO: Update the history list in the UI
-        const upperFirst = str => str.split(' ')
-            .map(w => w[0]?.toUpperCase() + w.slice(1).toLowerCase())
-            .join(' ');
         this.historyList.innerHTML = '';
         this.searchHistory.forEach(city => {
             const li = document.createElement('li');
-            li.textContent = upperFirst(city);
+            li.textContent = city;
             li.classList.add('history-item');
             this.historyList.appendChild(li);
         })

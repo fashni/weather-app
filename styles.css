@@ -102,3 +102,7 @@ h1 {
 .details {
     font-size: 0.95rem;
 }
+
+.history-item {
+    text-transform: capitalize;
+}
