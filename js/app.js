@@ -84,13 +84,13 @@ class WeatherApp {
 
     addToHistory(city) {
         // TODO: Add city to search history
-        const city_lower = city.toLowerCase();
-        if (!this.searchHistory.includes(city_lower)) {
-            this.searchHistory.unshift(city_lower);
-            this.updateHistoryList();
-            // BONUS: Add to local storage
-            localStorage.setItem('searchHistory', JSON.stringify(this.searchHistory));
-        }
+        const cityLower = city.toLowerCase();
+        this.searchHistory = this.searchHistory.filter(item => item !== cityLower);
+        this.searchHistory.unshift(cityLower);
+        this.updateHistoryList();
+
+        // BONUS: Add to local storage
+        localStorage.setItem('searchHistory', JSON.stringify(this.searchHistory));
     }
 
     updateHistoryList() {
