@@ -58,11 +58,21 @@ class WeatherApp {
 
         // TODO: Display weather data
         const k2c = k => (k - 273.15).toFixed(1);
+        const localTime = new Date(Date.now() + data.timezone * 1000)
+            .toLocaleString(undefined, {
+                day: 'numeric',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true,
+            });
+
         const weather = `
             <div class="left">
                 <h3>${data.name}, ${data.sys.country}</h3>
                 <p class="temp">${k2c(data.main.temp)}°C</p>
-                <p class="details">${k2c(data.main.temp_max)}°/${k2c(data.main.temp_min)}° Feels like ${k2c(data.main.feels_like)}°</p>
+                <p class="details">${k2c(data.main.temp_max)}°/${k2c(data.main.temp_min)}° Feels like ${k2c(data.main.feels_like)}°
+                <br>${localTime}</p>
             </div>
             <div class="right">
                 <img src="${iconURL}" alt="${data.weather[0].description}" class="weather-icon" />
