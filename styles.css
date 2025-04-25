@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+  
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+  
+h1 {
+    text-align: center;
+    color: #333;
+}
+  
+#search-container {
+    display: flex;
+    margin-bottom: 20px;
+}
+  
+#city-input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+}
+  
+#search-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+  
+#weather-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+  
+#history-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
+#history-list {
+    list-style-type: none;
+    padding: 0;
+}
+  
+#history-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+  
+#history-list li:last-child {
+    border-bottom: none;
+}
+  
+#history-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.left {
+    flex: 1;
+}
+
+.right {
+    text-align: right;
+}
+
+.weather-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.temp {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+}
+
+.desc {
+    text-transform: capitalize;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.details {
+    font-size: 0.95rem;
+}
