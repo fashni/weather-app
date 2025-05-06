@@ -1,4 +1,4 @@
-import { fetchWeather } from './weatherApi.js';
+import { fetchWeatherByCity, fetchWeatherByCoord } from './weatherApi.js';
 
 class WeatherApp {
     constructor() {
@@ -26,29 +26,50 @@ class WeatherApp {
 
         // TODO: Check for city in URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const city = urlParams.get("city");
-        if (city) {
-            this.cityInput.value = city;
+        const query = urlParams.get("q");
+        if (query) {
+            this.cityInput.value = query;
             this.handleSearch();
         }
     }
 
+    isCoord(input) {
+        if (!input) return;
+        const parts = input.split(',').map(part => part.trim());
+        if (parts.length !== 2) return false;
+
+        const lat = parseFloat(parts[0]);
+        const lon = parseFloat(parts[1]);
+
+        return (
+            !isNaN(lat) && !isNaN(lon) &&
+            lat >= -90 && lat <= 90 &&
+            lon >= -180 && lon <= 180
+        )
+    }
+
     async handleSearch() {
         // TODO: Implement search functionality
-        const city = this.cityInput.value.trim();
-        if (!city) {
-            alert('Please input a city.');
-            return;
+        const input = this.cityInput.value.trim();
+        if (!input) return;
+
+        let data;
+        if (this.isCoord(input)) {
+            const [lat, lon] = input.split(',').map(part => part.trim());
+            data = await fetchWeatherByCoord(lat, lon);
+        } else {
+            data = await fetchWeatherByCity(input);
         }
-        const data = await fetchWeather(city);
-        // console.log(data)
+
+        // console.log(data);
         if (data.cod !== 200) {
             alert(data.message);
             return;
         }
+
         this.displayWeather(data);
-        this.addToHistory(city);
-        this.updateURL(city);
+        this.addToHistory(input);
+        this.updateURL(input);
     }
 
     displayWeather(data) {
@@ -69,7 +90,7 @@ class WeatherApp {
 
         const weather = `
             <div class="left">
-                <h3>${data.name}, ${data.sys.country}</h3>
+                <h3>${[data.name, data.sys?.country].filter(Boolean).join(', ')}</h3>
                 <p class="temp">${k2c(data.main.temp)}°C</p>
                 <p class="details">${k2c(data.main.temp_max)}°/${k2c(data.main.temp_min)}° Feels like ${k2c(data.main.feels_like)}°
                 <br>${localTime}</p>
@@ -115,7 +136,7 @@ class WeatherApp {
 
     updateURL(city) {
         // TODO: Update URL with the searched city
-        const newUrl = `${window.location.pathname}?city=${encodeURIComponent(city)}`;
+        const newUrl = `${window.location.pathname}?q=${encodeURIComponent(city)}`;
         history.pushState(null, '', newUrl);
     }
 }
