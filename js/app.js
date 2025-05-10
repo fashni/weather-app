@@ -50,12 +50,13 @@ class WeatherApp {
 
     async handleSearch() {
         // TODO: Implement search functionality
-        const input = this.cityInput.value.trim();
+        let input = this.cityInput.value.trim();
         if (!input) return;
 
         let data;
         if (this.isCoord(input)) {
             const [lat, lon] = input.split(',').map(part => part.trim());
+            input = `${lat},${lon}`;
             data = await fetchWeatherByCoord(lat, lon);
         } else {
             data = await fetchWeatherByCity(input);
